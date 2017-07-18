@@ -1,0 +1,121 @@
+
+
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.css">
+  <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome-animation.min.css">
+
+</head>
+
+<h2>Hello $nameofperson</h2>
+
+<script src="js/jquery-3.2.1.min.js"></script>    
+  <script src="js/bootstrap.min.js"></script> 
+<p>&nbsp;</p>
+<section class="container">
+<div class="table table-responsive">
+ 
+<table class="table table-responsive table-striped table-bordered">
+
+<tbody id="TextBoxContainer">
+</tbody>
+<tfoot>
+  <tr>
+    <th colspan="5">
+ <button id="btnAddquestion" type="button" class="btn btn-primary" data-toggle="tooltip" data-original-title="Add more controls"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp; Add&nbsp;</button>
+      
+    </th>
+  </tr>
+</tfoot>
+</table>
+      <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row" id="target">
+            <div class="col-sm-2">
+              <div class="input-group">
+                <input class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-sm btn-link removeBtn">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row pull-right">
+            <div class="col-xs-1">
+              <button class="btn btn-link btn-sm" id="add"><span class="glyphicon glyphicon-plus"></span> Add Options</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+<script>
+
+
+$(function () {
+    $("#btnAddquestion").bind("click", function () {
+        var div = $("<tr />");
+        div.html(GetDynamicTextBox(""));
+        $("#TextBoxContainer").append(div);
+    });
+    $("body").on("click", ".remove", function () {
+        $(this).closest("tr").remove();
+    });
+});
+function GetDynamicTextBox(value) {
+    return '<td><input name = "DynamicTextBox" type="text" value = "' + value + '" class="form-control" /></td>' +'<td><button type="button" class="btn btn-danger remove"><i class="glyphicon glyphicon-remove-sign"></i></button></td>'
+}
+
+var target = $("div#target");
+var n = function() {
+  return $("div.col-xs-2").length;
+};
+var newInput = function() {
+  var div = $("<div/>", {
+    "class": "input-group"
+  });
+  var input = $("<input>", {
+    "class": "form-control"
+  });
+  var span = $("<span/>", {
+    "class": "input-group-btn"
+  });
+  var button = $("<button/>", {
+    "class": "removeBtn btn btn-sm btn-link",
+    type: "button",
+    id: n()
+  });
+  var glyph = $("<span/>", {
+    "class": "glyphicon glyphicon-remove"
+  });
+  var col = $("<div/>", {
+    "class": "form-group col-xs-2",
+    id: "newInput-" + n()
+  });
+
+  $(glyph).appendTo(button);
+  $(button).appendTo(span);
+  $(input).appendTo(div);
+  $(span).appendTo(div);
+  $(div).appendTo(col);
+  return col;
+};
+
+$('button#add').on('click', function() {
+  $(newInput()).appendTo(target);
+});
+
+$('#target').on('click', 'button', function() {
+  var target = $("#target").find("#newInput-" + this.id);
+  $(target).remove();
+});
+
+</script>
+</html>
